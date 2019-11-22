@@ -16,12 +16,19 @@ struct ContentView: View {
              NavigationView {
                        VStack {
                         List(self.vm.photosArray) { photo in
+                            NavigationLink(destination: NewContentView(photo: photo)) {
+
                                 VStack () {
-                                    Text(String(photo.title)).bold().underline(true, color: Color.red)
-                                    KFImage(URL(string: photo.url)!).resizable().clipShape(Circle())
+                                    Text(String(photo.title))
+                                        .bold()
+                                        .underline()
+                                    KFImage(URL(string: photo.thumbnailUrl)!)
+                                        .resizable()
+                                        .clipShape(Circle())
                                 }
                             }
-                       }
+                        }
+                }
                 .navigationBarTitle("Photos")
                 .navigationBarItems(trailing:
                     Button("Add") {
