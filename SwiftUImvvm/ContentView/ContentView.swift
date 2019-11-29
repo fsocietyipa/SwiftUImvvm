@@ -6,27 +6,38 @@
 import SwiftUI
 import KingfisherSwiftUI
 
-
 struct ContentView: View {
     @ObservedObject var vm = ContentViewModel()
-    
+    @State private var favoriteColor = 0
     var body: some View {
         LoadingView(isShowing: .constant(vm.isLoading)) {
 
              NavigationView {
                        VStack {
-                        List(self.vm.photosArray) { photo in
-                            NavigationLink(destination: NewContentView(photo: photo)) {
+                        
+                        List {
+                            Section(header: Picker(selection: self.$favoriteColor, label: Text("")) {
+                                    Text("Mon").tag(0)
+                                    Text("Tue").tag(1)
+                                    Text("Wed").tag(2)
+                                    Text("Thu").tag(3)
+                                    Text("Fri").tag(4)
 
-                                VStack () {
-                                    Text(String(photo.title))
-                                        .bold()
-                                        .underline()
-                                    KFImage(URL(string: photo.thumbnailUrl)!)
-                                        .resizable()
-                                        .clipShape(Circle())
+                                }.pickerStyle(SegmentedPickerStyle()).padding()) {
+                            ForEach((self.vm.photosArray)) { photo in
+                                NavigationLink(destination: NewContentView(photo: photo)) {
+
+                                    VStack () {
+                                        Text(String(photo.title))
+                                            .bold()
+                                            .underline()
+                                        KFImage(URL(string: photo.thumbnailUrl)!)
+                                            .resizable()
+                                            .clipShape(Circle())
+                                    }
                                 }
                             }
+                        }
                         }
                 }
                 .navigationBarTitle("Photos")
