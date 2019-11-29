@@ -23,7 +23,13 @@ struct ContentView: View {
                                     Text("Thu").tag(3)
                                     Text("Fri").tag(4)
 
-                                }.pickerStyle(SegmentedPickerStyle()).padding()) {
+                                }.pickerStyle(SegmentedPickerStyle()).padding().background(Color.white)
+                                .listRowInsets(EdgeInsets(
+                                    top: 0,
+                                    leading: 0,
+                                    bottom: 0,
+                                    trailing: 0))
+                                ) {
                             ForEach((self.vm.photosArray)) { photo in
                                 NavigationLink(destination: NewContentView(photo: photo)) {
 
